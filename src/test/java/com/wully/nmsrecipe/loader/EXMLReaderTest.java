@@ -72,11 +72,11 @@ public class EXMLReaderTest {
     @Test
     public void serializeSubstanceXml() throws Exception {
         //prepare
-        EXMLReader exmlReader = new EXMLReader("test");
+        EXMLReader exmlReader = new EXMLReader();
         //act
 
 
-        System.out.println(exmlReader.deserialzeSubstances(substanceXML));
+        System.out.println(exmlReader.deserialzeExml(substanceXML));
         //assert
     }
 }

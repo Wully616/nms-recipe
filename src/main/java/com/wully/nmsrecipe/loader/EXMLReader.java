@@ -5,6 +5,8 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.wully.nmsrecipe.model.exml.Template;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,21 +19,23 @@ public class EXMLReader {
 
     private XmlMapper xmlMapper;
 
-    public EXMLReader(String exmlFile) {
+    public EXMLReader() {
 
         xmlMapper = new XmlMapper();
         xmlMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     }
 
-
-    private String getExmlFile(String exmlFile){
+    public Template parseExml(String exmlFile){
+        return deserialzeExml(getExmlFile(exmlFile));
+    }
+    public String getExmlFile(String exmlFile){
         StringBuilder sb = new StringBuilder();
-        File file = new File("classpath:" + exmlFile);
+        Resource resource = new ClassPathResource(exmlFile);
         try {
-            FileInputStream inputStream = new FileInputStream(file);
+
             String line;
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+            BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()));
             while ((line = br.readLine()) != null) {
                 sb.append(line);
             }
@@ -43,7 +47,13 @@ public class EXMLReader {
         return  sb.toString();
     }
 
-    public Template deserialzeSubstances(String xml) throws Exception{
-        return xmlMapper.readValue(xml, Template.class);
+    public Template deserialzeExml(String xml){
+        Template template = new Template();
+        try{
+            template = xmlMapper.readValue(xml, Template.class);
+        } catch (Exception e) {
+            logger.error("Failed to map exml to template: " + e.getMessage());
+        }
+        return template;
     }
 }
