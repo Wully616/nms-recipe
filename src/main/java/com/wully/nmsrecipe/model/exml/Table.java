@@ -15,6 +15,14 @@ public class Table {
     @JacksonXmlElementWrapper(useWrapping = false)
     private List<Property> properties = new ArrayList<>();
 
+    public String getName() {
+        return name;
+    }
+
+    public List<Property> getProperties() {
+        return properties;
+    }
+
     @Override
     public String toString() {
         return "Table{" +

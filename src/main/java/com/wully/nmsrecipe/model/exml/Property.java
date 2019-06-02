@@ -19,6 +19,18 @@ public class Property {
     @JacksonXmlElementWrapper(useWrapping = false)
     public List<Property> property = new ArrayList<>();
 
+    public String getValue() {
+        return value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Property> getProperty() {
+        return property;
+    }
+
     @Override
     public String toString() {
         return "Property{" +

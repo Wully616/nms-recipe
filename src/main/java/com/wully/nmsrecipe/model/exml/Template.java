@@ -18,6 +18,14 @@ public class Template {
     @JacksonXmlElementWrapper(useWrapping = false)
     private List<Table> tables = new ArrayList<>();
 
+    public String getTemplate() {
+        return template;
+    }
+
+    public List<Table> getTables() {
+        return tables;
+    }
+
     @Override
     public String toString() {
         return "Template{" +
